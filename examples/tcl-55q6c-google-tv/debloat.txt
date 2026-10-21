@@ -1,0 +1,62 @@
+# TCL 55Q6C QD-Mini LED, India (device G08, model "Smart TV Pro", product G08_4K_GB, MediaTek tcl9618)
+# Google TV, Android 14 (SDK 34), firmware UTT2.250416.001 AU02 - the same build as examples/tcl-q7c-google-tv.
+# About 2.4 GB RAM. On Wi-Fi, PS5 on HDMI 1. Indian apps kept: JioHotstar, JioCinema, Airtel Xstream, SonyLIV.
+#
+# Tested on one set from 22 October 2026. Disabled with `pm disable-user --user 0`, one call each, in three batches
+# with a screenshot after each, then one reboot: all 25 stayed off, none came back. MemAvailable on Home went from
+# about 640 MB to about 890-920 MB. launcherx and setupwraith were disabled afterwards, for the new launcher.
+#
+# Apply:   TV_HOST=<tv ip> tools/disable.sh examples/tcl-55q6c-google-tv/debloat.txt
+#          On Wi-Fi, check `dumpsys wifi | grep cname` first: here the home network belonged to setupwraith until
+#          it was forgotten and re-joined in Settings (README). launcherx is skipped by disable.sh's Home guard
+#          until the new launcher is Home; build-and-install.sh disables it.
+# Undo:    TV_HOST=<tv ip> examples/tcl-55q6c-google-tv/restore-all.sh
+# Everything is DISABLED, not uninstalled. Comment out any line you want to keep.
+#
+# Stock launcher: com.google.android.apps.tv.launcherx. Live TV / HDMI app: com.tcl.tv (com.tcl.player.TVActivity).
+# Left enabled on purpose: com.tcl.tv, com.tcl.tvinput, com.tcl.suspension (Input key menu), com.tcl.autopair
+# (remote), com.tcl.inputmethod.international, com.tcl.systemserver, com.tcl.providers.config, com.tcl.initsetup,
+# com.tcl.factory.view, com.tcl.useragreement, com.tcl.globalkeyoverlay, com.tcl.systemui.plugin,
+# com.tcl.gamebar (Game Bar / Game Master - only offered while an HDMI game source is showing), com.tcl.dashboard,
+# com.tcl.eva, com.tcl.gallery, com.google.android.apps.mediashell (Chromecast), Play Store and Play Services,
+# katniss (voice), AirPlay, Miracast / T-Cast, Netflix, Prime Video, every com.mediatek.* and com.dolby.* package.
+# Not touched because what it does is unclear: com.tcl.ttvs (Samba TV ACR / TCL BI, on some sets also T-Cast and
+# updates). Never launch com.tcl.factory.view.
+
+# TCL promo, push messages, content rows, store demo, hotel mode
+com.tcl.messagebox                     # TCL pushed messages and promos
+com.tcl.tv.tclhome_passive             # TCL content pushed to the home screen at boot
+com.tcl.waterfall.overseas             # TCL Channel / content waterfall (the remote's TCL Channel key opened it)
+com.tcl.channelplus                    # TCL Live FAST channels; its tile disappeared from Google TV's app row
+com.tcl.esticker                       # retail-demo sticker
+com.tcl.exhibit                        # store demo
+com.tcl.usercenter                     # TCL account
+com.tcl.hotelmenu                      # hotel mode
+
+# Telemetry, diagnostics and Android 14 ad / privacy services
+com.tcl.logkit                         # log capture
+com.google.android.feedback
+com.android.tv.feedbackconsent
+com.android.adservices.api             # Privacy Sandbox
+com.android.ondevicepersonalization.services
+com.android.federatedcompute.services
+
+# Extras nobody asked for
+com.tcl.ocean.instructions             # on-TV manual
+com.tcl.repairguide                    # self-diagnosis
+com.android.printspooler
+com.google.android.syncadapters.calendar
+com.google.android.onetimeinitializer
+com.tcl.hearaid                        # hearing test, TCL wireless speakers
+com.tcl.t_solo                         # Bluetooth "listen alone"
+com.tcl.UpdatePeripheral               # TCL soundbar firmware updater
+com.tcl.smartalexa                     # Alexa
+com.tcl.guard                          # TCL "app manager" / cleaner
+android.autoinstalls.config.google.gtvpai # silently installs promoted apps
+
+# Second Home claimant: off once the new launcher is Home. Disabling it deletes any saved Wi-Fi network it created
+# (here an old, unused one); the home network had been forgotten and re-joined first so TV Settings owned it.
+com.google.android.tungsten.setupwraith
+
+# Stock launcher, off once the new launcher is Home (build-and-install.sh does this after Home resolves to it)
+com.google.android.apps.tv.launcherx

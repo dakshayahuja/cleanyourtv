@@ -1,0 +1,56 @@
+{
+  "columns": 7,
+  "dock_apps": [
+    "tv.cleanyourtv.ps5",
+    "com.google.android.youtube.tv",
+    "com.spotify.tv.android",
+    "com.netflix.ninja",
+    "in.startv.hotstar",
+    "tv.twitch.android.app",
+    "com.amazon.amazonvideo.livingroom"
+  ],
+  "fill_dock": false,
+  "hidden_apps": [
+    "com.android.tv.settings",
+    "com.android.vending",
+    "com.apple.atve.androidtv.appletv",
+    "com.gathin.tvhome",
+    "com.google.android.play.games",
+    "com.google.android.videos",
+    "com.google.android.youtube.tvmusic",
+    "com.jio.media.stb.ondemand",
+    "com.sonyliv",
+    "com.tcl.browser",
+    "com.tcl.dashboard",
+    "com.tcl.gallery",
+    "com.tcl.magiconnectfree",
+    "com.tcl.partnercustomizer",
+    "com.tcl.suspension",
+    "com.tcl.tv",
+    "com.tcl.ui_mediaCenter",
+    "tv.airtel.xstream.tvapp"
+  ],
+  "app_library": true,
+  "library_button": true,
+  "live_tv_package": "com.tcl.tv",
+  "app_labels": [
+    "com.tcl.tv=Live TV",
+    "in.startv.hotstar=Hotstar"
+  ],
+  "settings_key_keycodes": [
+    83
+  ],
+  "app_keys": [
+    "190:com.google.android.youtube.tv",
+    "4062:com.netflix.ninja",
+    "4099:com.amazon.amazonvideo.livingroom",
+    "183:com.google.android.youtube.tv",
+    "184:com.spotify.tv.android",
+    "185:in.startv.hotstar",
+    "186:tv.cleanyourtv.ps5"
+  ],
+  "compact_inputs": true,
+  "cinematic_home": true,
+  "greeting_name": "Dakshay",
+  "wrap_dock": true
+}

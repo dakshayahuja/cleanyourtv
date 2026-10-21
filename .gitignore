@@ -17,3 +17,5 @@ work/
 *.aab
 launcher/hs_err_pid*.log
 launcher/replay_pid*.log
+# a session's working backups (settings dumps, Wi-Fi names, screenshots) stay local
+backups/

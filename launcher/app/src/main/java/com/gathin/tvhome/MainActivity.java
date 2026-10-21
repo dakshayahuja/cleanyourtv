@@ -527,6 +527,14 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             libraryFromTopBar = true;   // closing it goes back to this button, not to the pill after the last row
         });
         btnLibraryTop.setVisibility(cfg.libraryButton && cfg.appLibrary ? View.VISIBLE : View.GONE);
+        wrapDock = cfg.wrapDock;
+        if (cfg.compactInputs) {
+            ViewGroup bar = (ViewGroup) btnInputs.getParent();
+            bar.removeView(btnInputs);
+            bar.addView(btnInputs, bar.indexOfChild(btnLibraryTop));
+            ((TextView) btnInputs).setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_input_source, 0, 0, 0);
+            makeIconOnly((TextView) btnInputs);
+        }
         iconOnlyButtons = cfg.iconOnlyButtons;
         wifiIconOnly = iconOnlyButtons && cfg.wifiLabelWidth <= 0;
         if (iconOnlyButtons) {
@@ -550,7 +558,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
                 focusTile(lastFocused % COLUMNS);
                 return true;
             }
-            int firstButton = btnInputs.getVisibility() == View.VISIBLE ? R.id.btnInputs : firstTopButton().getId();
+            int firstButton = firstVisibleChild((ViewGroup) btnSettings.getParent()).getId();
             int leftButton = rtlMenuBar ? R.id.btnSettings : firstButton;
             int rightButton = rtlMenuBar ? firstButton : R.id.btnSettings;
             if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) return v.getId() == leftButton;
@@ -1768,6 +1776,10 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
             }
             // In the dock, the last app is the row's end: the empty slots after it take no focus.
             int rowCount = position < COLUMNS ? Math.min(count, adapter.dockFilled()) : count;
+            if (wrapDock && position < COLUMNS && rowCount > 1) {
+                if (forward && position == rowCount - 1) { focusTile(0); return true; }
+                if (!forward && position == 0) { focusTile(rowCount - 1); return true; }
+            }
             return GridNavigation.atHorizontalEdge(position, rowCount, COLUMNS,
                     rtlAppGrid, keyCode == KeyEvent.KEYCODE_DPAD_LEFT);
         }
@@ -1796,6 +1808,14 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     }
 
     /** The first top-bar button after Inputs that is shown: the network pill, Reorder, then Settings (always there). */
+    /** Leftmost shown button of the top bar, wherever compact_inputs put Inputs. */
+    private static View firstVisibleChild(ViewGroup bar) {
+        for (int i = 0; i < bar.getChildCount(); i++) {
+            if (bar.getChildAt(i).getVisibility() == View.VISIBLE) return bar.getChildAt(i);
+        }
+        return bar;
+    }
+
     private View firstTopButton() {
         if (btnWifi.getVisibility() == View.VISIBLE) return btnWifi;
         if (btnReorder.getVisibility() == View.VISIBLE) return btnReorder;
@@ -2094,6 +2114,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     private boolean wifiIconOnly;
     /** The app library button in the top bar (library_button). */
     private View btnLibraryTop;
+    /** wrap_dock: Left/Right at the dock's ends go round to its other end. */
+    private boolean wrapDock;
     /** The open library came from that button: closing it returns there instead of scrolling to the grid's end. */
     private boolean libraryFromTopBar;
 
