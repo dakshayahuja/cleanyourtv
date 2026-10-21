@@ -119,6 +119,11 @@
     <bool name="icon_only_buttons">false</bool>
     <!-- The app library as a round button in the top bar, beside Settings (app_library must be on too). -->
     <bool name="library_button">false</bool>
+    <!-- Inputs as a round icon-only button (the remote's input symbol) placed just before the app library
+         button, instead of the labelled pill at the start of the top bar. -->
+    <bool name="compact_inputs">false</bool>
+    <!-- Right on the last dock app goes to the first, Left on the first to the last. -->
+    <bool name="wrap_dock">false</bool>
     <!-- With icon_only_buttons: keep the network name on the Wi-Fi pill up to this width in dp, cut with an ellipsis.
          0 leaves the Wi-Fi pill as an icon. -->
     <integer name="wifi_label_width">0</integer>
